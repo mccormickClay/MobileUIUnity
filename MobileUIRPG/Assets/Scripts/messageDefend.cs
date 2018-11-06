@@ -6,12 +6,10 @@ using System.Reflection;
 
 public class messageDefend : MonoBehaviour {
 
-    SpriteRenderer spriteRenderer;
     MethodBase method;
 
     // Use this for initialization
     void Awake () {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         Button button = GetComponent<Button>();
         button.onClick.AddListener(Defend);
     }
