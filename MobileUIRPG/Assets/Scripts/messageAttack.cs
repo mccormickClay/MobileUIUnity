@@ -18,5 +18,6 @@ public class messageAttack : MonoBehaviour {
     {
         method = MethodBase.GetCurrentMethod();
         Debug.Log(gameObject.name + " -> " + method.Name);
+        GlobalManager.Print();
     }
 }
