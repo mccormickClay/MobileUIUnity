@@ -1,15 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class GlobalManager
 {
     private static GlobalManager instance = null;
+    private Text debuggerText;
 
     private GlobalManager()
     {
         Debug.Log("Global Manager Constructor");
+
+        // Finds
+        DebugMobileManager.SetDeBuggerText();
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
