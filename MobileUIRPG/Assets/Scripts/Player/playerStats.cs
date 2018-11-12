@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class playerStats {
 
-    public float HP;
+    public float currentHP;
+    public float maxHP;
 
 }

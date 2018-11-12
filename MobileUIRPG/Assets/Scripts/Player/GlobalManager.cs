@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class GlobalManager
 {
     private static GlobalManager instance = null;
-    private Text debuggerText;
+    private playerStats savedData;
 
     private GlobalManager()
     {
         Debug.Log("Global Manager Constructor");
-
-        // Finds
         DebugMobileManager.SetDeBuggerText();
+
+        savedData = new playerStats();
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -34,6 +34,26 @@ public class GlobalManager
     void privPrint()
     {
         Debug.Log("Print");
+    }
+
+    public static void SaveData(playerStats _data)
+    {
+        Instance().privSaveData(_data);
+    }
+
+    void privSaveData(playerStats _data)
+    {
+        savedData = _data;
+    }
+
+    public static playerStats LoadData()
+    {
+        return(Instance().privLoadData());
+    }
+
+    playerStats privLoadData()
+    {
+        return (savedData);
     }
 }
 

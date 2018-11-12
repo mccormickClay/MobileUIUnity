@@ -3,29 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour {
 
-    public float maxHP;
-    public float currentHP;
-    public Image healthBar;
+public class Enemy : MonoBehaviour
+{
+
+    private float maxHP;
+    private float currentHP;
+    private Image healthBar;
+    protected GameObject player;
 
     // this is added by the extents to always have a 
     // clear distance above the enemies top
     private float distanceAboveEnemy = 0.5f;
 
-	// Use this for initialization
-	void Start () {
-        maxHP = 100.0f;
+    protected enum State { ATTACK, WAIT};
+    protected State state;
 
-        currentHP = maxHP;
+    void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+
         GameObject canvas = Instantiate(Resources.Load("CalledPrefabs/EnemyCanvas"), gameObject.transform) as GameObject;
         SetUpHealthCanvas(ref canvas);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public void Damage(int dmg)
     {
@@ -50,5 +56,21 @@ public class Enemy : MonoBehaviour {
         extentsWorld = new Vector3(transform.position.x, (extentsWorld.y + distanceAboveEnemy), transform.position.z);
 
         canvas.transform.SetPositionAndRotation(extentsWorld, Quaternion.identity);
+    }
+
+    protected void SetHealth(float _health)
+    {
+        maxHP = _health;
+        currentHP = _health;
+    }
+
+    protected virtual void UpdateState()
+    {
+
+    }
+
+    protected void Attack(float _dmg)
+    {
+        player.GetComponent<playerState>().Damage(_dmg);
     }
 }
