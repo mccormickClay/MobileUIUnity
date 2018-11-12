@@ -8,6 +8,10 @@ public class playerState : MonoBehaviour {
     playerStats localPlayerData;
     public Image healthBar;
 
+    GameObject buttonAtt;
+    GameObject buttonDef;
+    GameObject imageWait;
+
     // Use this for initialization
     void Start () {
         localPlayerData = GlobalManager.LoadData();
@@ -27,6 +31,19 @@ public class playerState : MonoBehaviour {
         playerUI.name = "PlayerCanvas";
         healthBar = playerUI.transform.GetChild(3).gameObject.GetComponent<Image>();
         healthBar.fillAmount = localPlayerData.currentHP / localPlayerData.maxHP;
+        buttonAtt = playerUI.transform.GetChild(0).gameObject;
+        buttonDef = playerUI.transform.GetChild(1).gameObject;
+        imageWait = playerUI.transform.GetChild(2).gameObject;
+
+        EnableButtons(true);
+    }
+
+    void EnableButtons(bool enabled)
+    {
+        buttonAtt.SetActive(enabled);
+        buttonDef.SetActive(enabled);
+
+        imageWait.SetActive(!enabled);
     }
 
 	// Update is called once per frame

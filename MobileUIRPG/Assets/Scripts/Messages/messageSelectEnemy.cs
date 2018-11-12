@@ -27,21 +27,25 @@ public class messageSelectEnemy : MonoBehaviour {
 		if((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             Touch touch = Input.GetTouch(0);
-            ray = Camera.main.ScreenPointToRay(touch.position);
-
-            CastRayForward();
+            if (touch.position.y > 120f)
+            {
+                CastRayForward(touch.position);
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Mouse0) == true)
         {
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            CastRayForward();
+            if (Input.mousePosition.y > 120f)
+            {
+                CastRayForward(Input.mousePosition);
+            }
 
         }
 	}
 
-    void CastRayForward()
+    void CastRayForward(Vector3 _inputPosition)
     {
+        ray = Camera.main.ScreenPointToRay(_inputPosition);
+
         if (Physics.Raycast(ray, out hit, rayDistance, layerMask))
         {
             selectedEnemy = hit.collider.gameObject;
