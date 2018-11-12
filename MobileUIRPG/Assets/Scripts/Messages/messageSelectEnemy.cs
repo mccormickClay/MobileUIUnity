@@ -27,7 +27,8 @@ public class messageSelectEnemy : MonoBehaviour {
 		if((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             Touch touch = Input.GetTouch(0);
-            if (touch.position.y > 120f)
+            DebugMobileManager.Log("x: " + touch.position.x.ToString() + " y:" + touch.position.y.ToString());
+            if (touch.position.y > 500f)
             {
                 CastRayForward(touch.position);
             }
