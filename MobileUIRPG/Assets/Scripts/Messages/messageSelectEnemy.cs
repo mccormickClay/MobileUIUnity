@@ -28,14 +28,14 @@ public class messageSelectEnemy : MonoBehaviour {
         {
             Touch touch = Input.GetTouch(0);
             DebugMobileManager.Log("x: " + touch.position.x.ToString() + " y:" + touch.position.y.ToString());
-            if (touch.position.y > 500f)
+            if (touch.position.y > DisplayManager.GetRayCastBattleDeadZone())
             {
                 CastRayForward(touch.position);
             }
         }
         else if (Input.GetKeyDown(KeyCode.Mouse0) == true)
         {
-            if (Input.mousePosition.y > 120f)
+            if (Input.mousePosition.y > DisplayManager.GetRayCastBattleDeadZone())
             {
                 CastRayForward(Input.mousePosition);
             }

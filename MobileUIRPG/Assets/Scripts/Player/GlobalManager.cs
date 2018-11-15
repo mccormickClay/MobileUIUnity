@@ -13,6 +13,9 @@ public class GlobalManager
         Debug.Log("Global Manager Constructor");
         DisplayManager.Create();
         DebugMobileManager.Create();
+
+        EnemyManager.Create();
+
         savedData = new playerStats();
     }
 

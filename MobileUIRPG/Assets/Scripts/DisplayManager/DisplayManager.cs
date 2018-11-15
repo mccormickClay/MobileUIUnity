@@ -29,7 +29,8 @@ public class DisplayManager
 
     void privCreate()
     {
-        aspectRatio = new Vector2(Screen.width, Screen.height);        
+        aspectRatio = new Vector2(Screen.width, Screen.height);
+        raycastBattleDeadZone = GetPositionOnScreen(0.0f, 0.25f).y;
     }
 
     public static Vector2 GetAspectRatio()
@@ -58,13 +59,30 @@ public class DisplayManager
         return(Instance().privGetPositionOnScreen(_x,_y,_z));
     }
 
-    Vector3 privGetPositionOnScreen(float _x, float _y, float _z)
+    Vector3 privGetPositionOnScreen(float _xPercentage, float _yPercentage, float _zPercentage)
     {
-        Vector3 posOnScreen = new Vector3(_x, _y, _z);
+        _xPercentage *= GetAspectRatio().x;
+        _yPercentage *= GetAspectRatio().y;
+        Vector3 posOnScreen = new Vector3(_xPercentage, _yPercentage, _zPercentage);
         return (posOnScreen);
     }
 
+    public static float GetRayCastBattleDeadZone()
+    {
+        return (Instance().privGetRayCastBattleDeadZone());
+    }
+
+    float privGetRayCastBattleDeadZone()
+    {
+        return (raycastBattleDeadZone);
+    }
+
     Vector2 aspectRatio;
+
+    // the raycast y position where rays will be shot out.
+    // making sure rays are not casted when not needed.
+    // Specifically in the battle phase.
+    float raycastBattleDeadZone;
 
 
 }

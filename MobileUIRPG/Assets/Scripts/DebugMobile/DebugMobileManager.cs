@@ -40,9 +40,7 @@ public class DebugMobileManager
 
         obj.GetComponent<RectTransform>().pivot = Vector2.up;
 
-        float yPos = DisplayManager.GetAspectRatio().y;
-
-        Vector2 pos = new Vector2(0.0f, yPos);
+        Vector2 pos = DisplayManager.GetPositionOnScreen(0.0f, 1.0f);
 
         obj.GetComponent<RectTransform>().position = pos;
 
