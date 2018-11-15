@@ -14,7 +14,6 @@ public class DebugMobileManager
         Debug.Log("DebugMobileManager Constructor");
     }
 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     public static DebugMobileManager Instance()
     {
         if (instance == null)
@@ -24,12 +23,12 @@ public class DebugMobileManager
         return instance;
     }
 
-    public static void SetDeBuggerText()
+    public static void Create()
     {
-        Instance().privSetDebuggerText();
+        Instance().privCreate();
     }
 
-    void privSetDebuggerText()
+    void privCreate()
     {
         GameObject obj = new GameObject();
         privSetText(ref obj);
@@ -37,12 +36,16 @@ public class DebugMobileManager
         GameObject canvas = new GameObject();
         privSetCanvas(ref canvas);
 
-        obj.transform.parent = canvas.transform;
+        obj.transform.SetParent(canvas.transform, false);
 
-        obj.GetComponent<RectTransform>().localPosition = new Vector3(-400f, 890f, 0f);
+        obj.GetComponent<RectTransform>().pivot = Vector2.up;
 
-        //debuggerText = Object.FindObjectOfType<Text>();
-        //debuggerText.text = "";
+        float yPos = DisplayManager.GetAspectRatio().y;
+
+        Vector2 pos = new Vector2(0.0f, yPos);
+
+        obj.GetComponent<RectTransform>().position = pos;
+
     }
 
     void privSetText(ref GameObject obj)
@@ -51,13 +54,14 @@ public class DebugMobileManager
         obj.layer = LayerMask.NameToLayer("UI");
         obj.AddComponent<CanvasRenderer>();
         debuggerText = obj.AddComponent<Text>();
-        debuggerText.fontSize = 70;
+        debuggerText.fontSize = 20;
         debuggerText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
         debuggerText.horizontalOverflow = HorizontalWrapMode.Overflow;
         debuggerText.verticalOverflow = VerticalWrapMode.Overflow;
         debuggerText.resizeTextForBestFit = false;
         debuggerText.supportRichText = true;
         debuggerText.color = Color.red;
+
         debuggerText.text = "DEBUGGER ACTIVE";
     }
 
@@ -68,7 +72,7 @@ public class DebugMobileManager
 
         RectTransform rect = canvas.AddComponent<RectTransform>();
         rect.position = new Vector3(137f, 244f, 0f);
-        rect.sizeDelta = new Vector2(1080f, 1920f);
+        rect.sizeDelta = DisplayManager.GetAspectRatio();
         rect.pivot = new Vector2(.5f, .5f);
         rect.localScale = new Vector3(0.25f,0.25f,0.25f);
 
@@ -77,7 +81,7 @@ public class DebugMobileManager
 
         CanvasScaler cans = canvas.AddComponent<CanvasScaler>();
         cans.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        cans.referenceResolution = new Vector2(1080f, 1920f);
+        cans.referenceResolution = DisplayManager.GetAspectRatio();
         cans.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
         cans.referencePixelsPerUnit = 100f;
 

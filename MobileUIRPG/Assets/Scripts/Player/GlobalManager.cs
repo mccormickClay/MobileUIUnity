@@ -11,8 +11,8 @@ public class GlobalManager
     private GlobalManager()
     {
         Debug.Log("Global Manager Constructor");
-        DebugMobileManager.SetDeBuggerText();
-
+        DisplayManager.Create();
+        DebugMobileManager.Create();
         savedData = new playerStats();
     }
 
