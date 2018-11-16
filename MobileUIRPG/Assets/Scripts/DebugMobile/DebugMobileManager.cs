@@ -30,7 +30,6 @@ public class DebugMobileManager
 
     void privCreate()
     {
-        //GameObject debugUI = Resources.Load("CalledPrefabs/DebugCanvas") as GameObject;
         GameObject debugUI = GameObject.Instantiate(Resources.Load("CalledPrefabs/DebugCanvas") as GameObject);
         debugUI.name = "DebugCanvas";
         debuggerText = debugUI.transform.GetChild(0).GetComponent<Text>();

@@ -10,6 +10,7 @@ public class EnemyManager {
     {
         Debug.Log("EnemyManager -> Constructor()");
         DebugMobileManager.Log("EnemyManager -> Constructor()");
+        BatSpawner.Create();
     }
 
     public static EnemyManager Instance()
@@ -29,5 +30,22 @@ public class EnemyManager {
     void privCreate()
     {
         Debug.Log("Create enemy object/factory for storage");
+        enemyPosition_2 = new Vector3(-294f, 1.24f, -0.3f);
     }
+
+    public static Vector3 GetMiddleSpawn()
+    {
+        return(Instance().privGetMiddleSpawn());
+    }
+
+    Vector3 privGetMiddleSpawn()
+    {
+        return (enemyPosition_2);
+    }
+
+    private Vector3 enemyPosition_1;
+    private Vector3 enemyPosition_2;
+    private Vector3 enemyPosition_3;
+    public enum ENEMYSPAWNPOINT { LEFT, MIDDLE, RIGHT};
+
 }
