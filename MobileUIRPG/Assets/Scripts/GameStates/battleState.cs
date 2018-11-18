@@ -2,20 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class battleState : MonoBehaviour {
+public abstract class battleState : MonoBehaviour {
 
-    enum State {
+    protected enum State {
         CHOOSE, WAIT, ACTION }
 
-    State state;
+    protected State state;
 
-	// Use this for initialization
-	void Start () {
+    protected abstract void DoState();
+    void SetState(State _state)
+    {
+        state = _state;
+    }
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void NextState()
+    {
+        switch(state)
+        {
+            case State.CHOOSE:
+                SetState(State.ACTION);   
+                break;
+            case State.ACTION:
+                SetState(state = State.WAIT);
+                break;
+            case State.WAIT:
+                SetState(state = State.CHOOSE);
+                break;
+        }
+
+        DoState();
+
+    }
+
 }

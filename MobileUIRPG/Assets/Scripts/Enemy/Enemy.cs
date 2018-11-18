@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : battleState
 {
 
     private float maxHP;
@@ -17,9 +17,6 @@ public abstract class Enemy : MonoBehaviour
     // this is added by the extents to always have a 
     // clear distance above the enemies top
     private float distanceAboveEnemy = 0.5f;
-
-    protected enum State { ATTACK, WAIT};
-    protected State state;
 
     void Awake()
     {
@@ -46,6 +43,10 @@ public abstract class Enemy : MonoBehaviour
         {
             selector.SetSelected(null);
             SendToFactory();
+        }
+        else
+        {
+            NextState();
         }
     }
 

@@ -15,6 +15,7 @@ public class playerState : battleState {
     // Use this for initialization
     void Start () {
         localPlayerData = GlobalManager.LoadData();
+        state = battleState.State.CHOOSE;
 
         if(localPlayerData.maxHP == 0)
         {
@@ -29,7 +30,7 @@ public class playerState : battleState {
     {
         GameObject playerUI = Instantiate(Resources.Load("CalledPrefabs/PlayerCanvas") as GameObject);
         playerUI.name = "PlayerCanvas";
-        healthBar = playerUI.transform.GetChild(3).gameObject.GetComponent<Image>();
+        healthBar = playerUI.transform.GetChild(4).gameObject.GetComponent<Image>();
         healthBar.fillAmount = localPlayerData.currentHP / localPlayerData.maxHP;
         buttonAtt = playerUI.transform.GetChild(0).gameObject;
         buttonDef = playerUI.transform.GetChild(1).gameObject;
@@ -50,6 +51,22 @@ public class playerState : battleState {
 	void Update () {
 		
 	}
+
+    protected override void DoState()
+    {
+        switch(state)
+        {
+            case battleState.State.CHOOSE:
+                EnableButtons(true);
+                break;
+            case battleState.State.ACTION:
+                EnableButtons(false);
+                break;
+            case battleState.State.WAIT:
+                EnableButtons(false);
+                break;
+        }
+    }
 
     public void Damage(float _dmg)
     {
