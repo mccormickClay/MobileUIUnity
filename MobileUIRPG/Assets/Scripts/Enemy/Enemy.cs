@@ -80,4 +80,18 @@ public abstract class Enemy : battleState
     {
         player.GetComponent<playerState>().Damage(_dmg);
     }
+
+    protected IEnumerator Action(float _dmg)
+    {
+        yield return new WaitForSecondsRealtime(2);
+        Attack(_dmg);
+    }
+
+    protected IEnumerator WaitToChangeStates()
+    {
+        yield return new WaitForSecondsRealtime(2);
+        player.GetComponent<playerState>().NextState();
+        NextState();
+    }
+
 }

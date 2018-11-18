@@ -47,8 +47,8 @@ public class playerState : battleState {
         imageWait.SetActive(!enabled);
     }
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
 		
 	}
 

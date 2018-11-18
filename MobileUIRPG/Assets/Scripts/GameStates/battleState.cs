@@ -17,7 +17,8 @@ public abstract class battleState : MonoBehaviour {
 
     public void NextState()
     {
-        switch(state)
+
+        switch (state)
         {
             case State.CHOOSE:
                 SetState(State.ACTION);   
@@ -31,7 +32,6 @@ public abstract class battleState : MonoBehaviour {
         }
 
         DoState();
-
     }
 
 }

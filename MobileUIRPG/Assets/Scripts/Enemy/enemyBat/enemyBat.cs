@@ -34,9 +34,10 @@ public class enemyBat : Enemy
                 break;
             case battleState.State.ACTION:
                 Debug.Log("Bat is Performing Action...");
-                Attack(25f);
-                player.GetComponent<playerState>().NextState();
-                NextState();
+                StartCoroutine(Action(25f));
+                /*player.GetComponent<playerState>().NextState();
+                NextState();*/
+                StartCoroutine(WaitToChangeStates());
                 break;
             case battleState.State.WAIT:
                 Debug.Log("Bat is Waiting...");
