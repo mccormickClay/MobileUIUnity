@@ -6,7 +6,7 @@ public class BatFactory {
 
     private static BatFactory instance = null;
     private Queue<GameObject> inactiveGOs = new Queue<GameObject>();
-    private Queue<GameObject> activeGOs = new Queue<GameObject>();
+    private List<GameObject> activeList = new List<GameObject>();
 
     private int poolAmount = 3;
 
@@ -49,15 +49,32 @@ public class BatFactory {
         }
     }
 
-    public static GameObject GetInactiveBat()
+    /* Get Inactive GO. Set inactive object to Active
+     * Send object to active list*/
+    public static GameObject CreateBat()
     {
-        return(Instance().privGetInactiveBat());
+        return(Instance().privCreateBat());
     }
 
-    GameObject privGetInactiveBat()
+    GameObject privCreateBat()
     {
         GameObject temp = inactiveGOs.Dequeue();
-        activeGOs.Enqueue(temp);
+        temp.SetActive(true);
+        activeList.Add(temp);
         return (temp);
+    }
+
+    /* "Destroy" GO. Set object to inactive and
+     * send to inactive queue*/
+    public static void Recycle(GameObject _enemyBat)
+    {
+        Instance().privRecycle(_enemyBat);
+    }
+
+    void privRecycle(GameObject _enemyBat)
+    {
+        activeList.Remove(_enemyBat);
+        _enemyBat.SetActive(false);
+        inactiveGOs.Enqueue(_enemyBat);
     }
 }

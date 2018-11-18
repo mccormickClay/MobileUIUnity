@@ -5,17 +5,13 @@ using UnityEngine;
 public class battleState : MonoBehaviour {
 
     enum State {
-        PLAYERCHOOSE,
-        PLAYERACTION,
-        ENEMYCHOOSE,
-        ENEMYACTION,
-        ENDROUND }
+        CHOOSE, WAIT, ACTION }
 
     State state;
 
 	// Use this for initialization
 	void Start () {
-        state = State.PLAYERCHOOSE;
+
 	}
 	
 	// Update is called once per frame

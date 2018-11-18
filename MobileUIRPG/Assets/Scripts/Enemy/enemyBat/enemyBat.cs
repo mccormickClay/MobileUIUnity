@@ -13,6 +13,11 @@ public class enemyBat : Enemy
 
     }
 
+    public override void SendToFactory()
+    {
+        BatFactory.Recycle(this.gameObject);
+    }
+
     // Update is called once per frame
     void Update() {
 

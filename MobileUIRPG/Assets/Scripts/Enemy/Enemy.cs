@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
 
     private float maxHP;
     private float currentHP;
     private Image healthBar;
-    protected GameObject player;
+    public GameObject player;
+
+    messageSelectEnemy selector;
 
     // this is added by the extents to always have a 
     // clear distance above the enemies top
@@ -22,6 +24,7 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        selector = player.GetComponent<messageSelectEnemy>();
 
         GameObject canvas = Instantiate(Resources.Load("CalledPrefabs/EnemyCanvas"), gameObject.transform) as GameObject;
         SetUpHealthCanvas(ref canvas);
@@ -41,9 +44,12 @@ public class Enemy : MonoBehaviour
         healthBar.fillAmount = (currentHP / maxHP);
         if (currentHP <= 0.0f)
         {
-            Destroy(this.gameObject);
+            selector.SetSelected(null);
+            SendToFactory();
         }
     }
+
+    public abstract void SendToFactory();
 
     void SetUpHealthCanvas(ref GameObject canvas)
     {

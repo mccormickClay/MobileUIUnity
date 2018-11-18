@@ -33,7 +33,7 @@ public class BatSpawner {
 
     void SpawnBat(int position)
     {
-        GameObject temp = BatFactory.GetInactiveBat();
+        GameObject temp = BatFactory.CreateBat();
 
         //Figure out where to add Spawn Variables on.
         // Enemy Manager get error if it uses variables from there

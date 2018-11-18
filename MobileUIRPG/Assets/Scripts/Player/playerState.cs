@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerState : MonoBehaviour {
+public class playerState : battleState {
 
     playerStats localPlayerData;
     public Image healthBar;

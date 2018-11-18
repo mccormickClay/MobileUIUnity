@@ -49,8 +49,7 @@ public class messageSelectEnemy : MonoBehaviour {
 
         if (Physics.Raycast(ray, out hit, rayDistance, layerMask))
         {
-            selectedEnemy = hit.collider.gameObject;
-            msgAttack.SetSelected(ref selectedEnemy);
+            SetSelected(hit.collider.gameObject);
             Debug.DrawRay(ray.origin, Camera.main.transform.forward * hit.distance, Color.red);
             Debug.Log("Did Hit");
             DebugMobileManager.Log("Did Hit: " + selectedEnemy.name);
@@ -66,5 +65,11 @@ public class messageSelectEnemy : MonoBehaviour {
     public void SetMsgAttack(ref messageAttack _msg)
     {
         msgAttack = _msg;
+    }
+
+    public void SetSelected(GameObject _go)
+    {
+        selectedEnemy = _go;
+        msgAttack.SetSelected(ref selectedEnemy);
     }
 }
