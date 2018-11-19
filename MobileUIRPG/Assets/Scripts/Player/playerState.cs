@@ -7,6 +7,7 @@ public class playerState : battleState {
 
     playerStats localPlayerData;
     public Image healthBar;
+    messageBase cmdBase;
 
     GameObject buttonAtt;
     GameObject buttonDef;
@@ -16,6 +17,7 @@ public class playerState : battleState {
     void Start () {
         localPlayerData = GlobalManager.LoadData();
         state = battleState.State.CHOOSE;
+        cmdBase = null;
 
         if(localPlayerData.maxHP == 0)
         {
@@ -59,13 +61,32 @@ public class playerState : battleState {
             case battleState.State.CHOOSE:
                 EnableButtons(true);
                 break;
+            case battleState.State.BEFORE:
+                EnableButtons(false);
+                break;
             case battleState.State.ACTION:
                 EnableButtons(false);
                 break;
-            case battleState.State.WAIT:
+            case battleState.State.AFTER:
                 EnableButtons(false);
                 break;
         }
+    }
+
+    public void SetMessage(messageBase _msg)
+    {
+        cmdBase = _msg;
+    }
+
+    public override IEnumerator Action()
+    {
+        while (inFirst)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        cmdBase.Process();
+        BattleController.FinishTurn();
     }
 
     public void Damage(float _dmg)
@@ -82,5 +103,11 @@ public class playerState : battleState {
     void SavePlayer()
     {
         GlobalManager.SaveData(localPlayerData);
+    }
+
+    public void SetToChoose()
+    {
+        state = State.CHOOSE;
+        DoState();
     }
 }

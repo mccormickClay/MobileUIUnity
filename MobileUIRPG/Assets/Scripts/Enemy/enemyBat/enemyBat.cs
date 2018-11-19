@@ -9,8 +9,9 @@ public class enemyBat : Enemy
 
     // Use this for initialization
     void Start() {
-        state = State.WAIT;
+        state = State.AFTER;
         SetHealth(health);
+        SetStrength(25f);
 
     }
 
@@ -30,16 +31,18 @@ public class enemyBat : Enemy
         {
             case battleState.State.CHOOSE:
                 Debug.Log("Bat is Choosing...");
+                BattleController.AddTurn(this);
+                NextState();
+                break;
+            case battleState.State.BEFORE:
                 NextState();
                 break;
             case battleState.State.ACTION:
                 Debug.Log("Bat is Performing Action...");
-                StartCoroutine(Action(25f));
-                /*player.GetComponent<playerState>().NextState();
-                NextState();*/
-                StartCoroutine(WaitToChangeStates());
+                //StartCoroutine(Action());
+                //StartCoroutine(WaitToChangeStates());
                 break;
-            case battleState.State.WAIT:
+            case battleState.State.AFTER:
                 Debug.Log("Bat is Waiting...");
                 break;
         }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerManager {
 
     private static PlayerManager instance = null;
+    private playerState playerState;
 
     private PlayerManager()
     {
@@ -27,7 +28,18 @@ public class PlayerManager {
 
     private void privCreate()
     {
-        GameObject bat = GameObject.Instantiate(Resources.Load("CalledPrefabs/Player/Player") as GameObject);
-        bat.name = "Player";
+        GameObject player = GameObject.Instantiate(Resources.Load("CalledPrefabs/Player/Player") as GameObject);
+        playerState = player.GetComponent<playerState>();
+        player.name = "Player";
+    }
+
+    public static void SetPlayerToChoose()
+    {
+        Instance().privSetPlayerToChoose();
+    }
+
+    void privSetPlayerToChoose()
+    {
+        playerState.SetToChoose();
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Reflection;
 
-public class messageAttack : MonoBehaviour {
+public class messageAttack : messageBase {
 
     MethodBase method;
     GameObject enemy;
@@ -15,7 +15,7 @@ public class messageAttack : MonoBehaviour {
     void Awake () {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Button button = GetComponent<Button>();
-        button.onClick.AddListener(Attack);
+        button.onClick.AddListener(Choose);
 
         selector = player.GetComponent<messageSelectEnemy>();
         playerState = player.GetComponent<playerState>();
@@ -23,17 +23,29 @@ public class messageAttack : MonoBehaviour {
         selector.SetMsgAttack(ref message);
 	}
 	
-    public void Attack()
+    public override void Choose()
     {
         if (enemy != null)
         {
-            playerState.NextState();
             method = MethodBase.GetCurrentMethod();
             Debug.Log(gameObject.name + " -> " + method.Name);
-            GlobalManager.Print();
-            enemy.GetComponent<Enemy>().Damage(10);
-            playerState.NextState();
+
+            BattleController.AddTurn(playerState);
+
+            playerState.SetMessage(this);
+            enemy.GetComponent<Enemy>().NextState();
+
+            playerState.NextState(); // Before
+            //Process();
         }
+    }
+
+    public override void Process()
+    {
+        playerState.NextState(); // Action
+        Debug.Log("Player Processed an Attack!");
+        enemy.GetComponent<Enemy>().Damage(10);
+        playerState.NextState(); // After
     }
 
     public void SetSelected(ref GameObject _selected)

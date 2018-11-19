@@ -61,6 +61,7 @@ public class BatFactory {
         GameObject temp = inactiveGOs.Dequeue();
         temp.SetActive(true);
         activeList.Add(temp);
+        BattleController.IncrementPawn();
         return (temp);
     }
 

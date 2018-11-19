@@ -9,6 +9,7 @@ public abstract class Enemy : battleState
 
     private float maxHP;
     private float currentHP;
+    private float strength;
     private Image healthBar;
     public GameObject player;
 
@@ -71,6 +72,11 @@ public abstract class Enemy : battleState
         currentHP = _health;
     }
 
+    protected void SetStrength(float _strength)
+    {
+        strength = _strength;
+    }
+
     protected virtual void UpdateState()
     {
 
@@ -81,10 +87,14 @@ public abstract class Enemy : battleState
         player.GetComponent<playerState>().Damage(_dmg);
     }
 
-    protected IEnumerator Action(float _dmg)
+    public override IEnumerator Action()
     {
-        yield return new WaitForSecondsRealtime(2);
-        Attack(_dmg);
+        while (inFirst)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        Attack(strength);
+        BattleController.FinishTurn();
     }
 
     protected IEnumerator WaitToChangeStates()
