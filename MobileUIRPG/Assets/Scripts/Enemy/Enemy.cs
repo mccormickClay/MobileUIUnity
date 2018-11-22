@@ -47,7 +47,7 @@ public abstract class Enemy : battleState
         }
         else
         {
-            NextState();
+            //NextState();
         }
     }
 
@@ -97,11 +97,11 @@ public abstract class Enemy : battleState
         BattleController.FinishTurn();
     }
 
-    protected IEnumerator WaitToChangeStates()
+    public override void ActionTest()
     {
-        yield return new WaitForSecondsRealtime(2);
-        player.GetComponent<playerState>().NextState();
-        NextState();
+        Attack(strength);
+        BattleController.FinishTurn();
     }
+
 
 }

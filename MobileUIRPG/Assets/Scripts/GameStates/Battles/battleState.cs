@@ -4,10 +4,10 @@ using UnityEngine;
 
 public abstract class battleState : MonoBehaviour {
 
-    protected enum State {
-        CHOOSE, BEFORE, ACTION, AFTER }
+    public enum State {
+        CHOOSE, WAIT }
 
-    protected State state;
+    public State state;
     protected bool inFirst = false;
 
     protected abstract void DoState();
@@ -22,15 +22,9 @@ public abstract class battleState : MonoBehaviour {
         switch (state)
         {
             case State.CHOOSE:
-                SetState(State.BEFORE);   
+                SetState(State.WAIT);   
                 break;
-            case State.BEFORE:
-                SetState(State.ACTION);
-                break;
-            case State.ACTION:
-                SetState(State.AFTER);
-                break;
-            case State.AFTER:
+            case State.WAIT:
                 SetState(State.CHOOSE);
                 break;
         }
@@ -44,6 +38,11 @@ public abstract class battleState : MonoBehaviour {
         StartCoroutine(Action());
     }
 
+    public void PerformActionTest()
+    {
+        ActionTest();
+    }
+
     private IEnumerator Waiting(float waitTime)
     {
         inFirst = true;
@@ -54,4 +53,5 @@ public abstract class battleState : MonoBehaviour {
     }
 
     public abstract IEnumerator Action();
+    public abstract void ActionTest();
 }

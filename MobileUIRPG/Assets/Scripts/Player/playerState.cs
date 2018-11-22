@@ -61,13 +61,7 @@ public class playerState : battleState {
             case battleState.State.CHOOSE:
                 EnableButtons(true);
                 break;
-            case battleState.State.BEFORE:
-                EnableButtons(false);
-                break;
-            case battleState.State.ACTION:
-                EnableButtons(false);
-                break;
-            case battleState.State.AFTER:
+            case battleState.State.WAIT:
                 EnableButtons(false);
                 break;
         }
@@ -85,6 +79,12 @@ public class playerState : battleState {
             yield return new WaitForSeconds(0.1f);
         }
 
+        cmdBase.Process();
+        BattleController.FinishTurn();
+    }
+
+    public override void ActionTest()
+    {
         cmdBase.Process();
         BattleController.FinishTurn();
     }
@@ -107,6 +107,7 @@ public class playerState : battleState {
 
     public void SetToChoose()
     {
+        Debug.Log("Player Set to Choose");
         state = State.CHOOSE;
         DoState();
     }

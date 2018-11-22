@@ -9,7 +9,7 @@ public class enemyBat : Enemy
 
     // Use this for initialization
     void Start() {
-        state = State.AFTER;
+        state = State.WAIT;
         SetHealth(health);
         SetStrength(25f);
 
@@ -34,15 +34,7 @@ public class enemyBat : Enemy
                 BattleController.AddTurn(this);
                 NextState();
                 break;
-            case battleState.State.BEFORE:
-                NextState();
-                break;
-            case battleState.State.ACTION:
-                Debug.Log("Bat is Performing Action...");
-                //StartCoroutine(Action());
-                //StartCoroutine(WaitToChangeStates());
-                break;
-            case battleState.State.AFTER:
+            case battleState.State.WAIT:
                 Debug.Log("Bat is Waiting...");
                 break;
         }

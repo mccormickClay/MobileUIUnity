@@ -33,19 +33,18 @@ public class messageAttack : messageBase {
             BattleController.AddTurn(playerState);
 
             playerState.SetMessage(this);
-            enemy.GetComponent<Enemy>().NextState();
+            enemy.GetComponent<Enemy>().NextState(); // Set Enemy to Choose
 
-            playerState.NextState(); // Before
-            //Process();
+            //playerState.NextState(); // Wait
         }
     }
 
     public override void Process()
     {
-        playerState.NextState(); // Action
+        //playerState.NextState(); // Action
         Debug.Log("Player Processed an Attack!");
         enemy.GetComponent<Enemy>().Damage(10);
-        playerState.NextState(); // After
+        //playerState.NextState(); // After
     }
 
     public void SetSelected(ref GameObject _selected)

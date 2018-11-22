@@ -9,7 +9,7 @@ public class BattleController {
     public Queue<battleState> turnQueue;
     public int amountOfPawns = 1;
     public int turnsLeft;
-    float waitTIme = 2.0f;
+    float waitTime = 200.0f;
 
     private BattleController()
     {
@@ -60,19 +60,26 @@ public class BattleController {
     {
         Debug.Log(turnQueue.Count);
         battleState temp = turnQueue.Dequeue();
-        temp.PerformAction(waitTIme);
-        waitTIme += 2.0f;
+        //temp.PerformAction(waitTime);
+        temp.PerformActionTest();
+        //waitTime += 2.0f;
     }
 
     void BattleSequence()
     {
         while (Instance().turnQueue.Count > 0)
         {
-            StartTurn();
+            //waitTime -= timer.StartTimer(waitTime);
+            //Debug.Log("waitTime: " + waitTime);
+            //if (waitTime < 0)
+            //{
+                StartTurn();
+                waitTime = 200.0f;
+            //}
         }
 
-        waitTIme = 2.0f;
-        
+        //waitTime = 2.0f;
+
     }
 
     public static void IncrementPawn()
@@ -105,6 +112,8 @@ public class BattleController {
     void privFinishTurn()
     {
         turnsLeft--;
+
+        Debug.Log("Amount of turns left: " + turnsLeft);
 
         if (turnsLeft == 0)
         {
