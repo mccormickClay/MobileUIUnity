@@ -72,18 +72,7 @@ public class playerState : battleState {
         cmdBase = _msg;
     }
 
-    public override IEnumerator Action()
-    {
-        while (inFirst)
-        {
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        cmdBase.Process();
-        BattleController.FinishTurn();
-    }
-
-    public override void ActionTest()
+    public override void Action()
     {
         cmdBase.Process();
         BattleController.FinishTurn();

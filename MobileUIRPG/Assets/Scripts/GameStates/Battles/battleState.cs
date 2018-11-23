@@ -32,15 +32,9 @@ public abstract class battleState : MonoBehaviour {
         DoState();
     }
 
-    public void PerformAction(float _waitTime)
+    public void PerformAction()
     {
-        StartCoroutine(Waiting(_waitTime));
-        StartCoroutine(Action());
-    }
-
-    public void PerformActionTest()
-    {
-        ActionTest();
+        Action();
     }
 
     private IEnumerator Waiting(float waitTime)
@@ -51,7 +45,5 @@ public abstract class battleState : MonoBehaviour {
         print("leave FinishFirst");
         inFirst = false;
     }
-
-    public abstract IEnumerator Action();
-    public abstract void ActionTest();
+    public abstract void Action();
 }

@@ -9,11 +9,16 @@ public class BattleController {
     public Queue<battleState> turnQueue;
     public int amountOfPawns = 1;
     public int turnsLeft;
-    float waitTime = 200.0f;
+    float timeBetweenTurns = 2.0f;
+
+    TurnTimer timer;
 
     private BattleController()
     {
         turnQueue = new Queue<battleState>();
+        GameObject timerObject = GameObject.Instantiate(Resources.Load("CalledPrefabs/TurnTimerObject") as GameObject);
+
+        timer = timerObject.GetComponent<TurnTimer>();
     }
 
     public static BattleController Instance()
@@ -60,25 +65,19 @@ public class BattleController {
     {
         Debug.Log(turnQueue.Count);
         battleState temp = turnQueue.Dequeue();
-        //temp.PerformAction(waitTime);
-        temp.PerformActionTest();
-        //waitTime += 2.0f;
+
+        temp.PerformAction();
+
     }
 
     void BattleSequence()
     {
-        while (Instance().turnQueue.Count > 0)
+        if (Instance().turnQueue.Count > 0)
         {
-            //waitTime -= timer.StartTimer(waitTime);
-            //Debug.Log("waitTime: " + waitTime);
-            //if (waitTime < 0)
-            //{
-                StartTurn();
-                waitTime = 200.0f;
-            //}
-        }
 
-        //waitTime = 2.0f;
+            timer.StartBattleCountDown(timeBetweenTurns);
+
+        }
 
     }
 
@@ -90,18 +89,7 @@ public class BattleController {
     void privIncrementPawn()
     {
         amountOfPawns++;
-        Debug.Log("Amount of pawns in scene: " + amountOfPawns);
-    }
-
-    public static void ZeroOutPawn()
-    {
-        Instance().privZeroOutPawn();
-    }
-
-    void privZeroOutPawn()
-    {
-        amountOfPawns = 0;
-        Debug.Log("Amount of pawns in scene: " + amountOfPawns);
+        Debug.Log("Amount of pawns in scene1: " + amountOfPawns);
     }
 
     public static void FinishTurn()
@@ -119,6 +107,10 @@ public class BattleController {
         {
             Debug.Log("There are zero turns left");
             PlayerManager.SetPlayerToChoose();
+        }
+        else
+        {
+            BattleSequence();
         }
     }
 }

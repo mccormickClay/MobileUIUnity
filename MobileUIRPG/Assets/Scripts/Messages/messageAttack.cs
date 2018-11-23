@@ -35,7 +35,7 @@ public class messageAttack : messageBase {
             playerState.SetMessage(this);
             enemy.GetComponent<Enemy>().NextState(); // Set Enemy to Choose
 
-            //playerState.NextState(); // Wait
+            playerState.NextState(); // Wait
         }
     }
 

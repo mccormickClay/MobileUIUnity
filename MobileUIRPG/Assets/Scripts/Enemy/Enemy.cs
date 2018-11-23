@@ -45,10 +45,6 @@ public abstract class Enemy : battleState
             selector.SetSelected(null);
             SendToFactory();
         }
-        else
-        {
-            //NextState();
-        }
     }
 
     public abstract void SendToFactory();
@@ -87,21 +83,12 @@ public abstract class Enemy : battleState
         player.GetComponent<playerState>().Damage(_dmg);
     }
 
-    public override IEnumerator Action()
+    public override void Action()
     {
-        while (inFirst)
-        {
-            yield return new WaitForSeconds(0.1f);
-        }
         Attack(strength);
         BattleController.FinishTurn();
     }
 
-    public override void ActionTest()
-    {
-        Attack(strength);
-        BattleController.FinishTurn();
-    }
 
 
 }
