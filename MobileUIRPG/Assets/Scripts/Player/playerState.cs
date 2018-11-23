@@ -59,9 +59,11 @@ public class playerState : battleState {
         switch(state)
         {
             case battleState.State.CHOOSE:
+                Debug.Log("Set to Choose");
                 EnableButtons(true);
                 break;
             case battleState.State.WAIT:
+                Debug.Log("Set to Wait");
                 EnableButtons(false);
                 break;
         }

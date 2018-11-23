@@ -4,6 +4,14 @@ using UnityEngine;
 
 public abstract class messageBase : MonoBehaviour {
 
-    public abstract void Choose();
+    protected playerState playerState;
+
+    protected abstract void Choose();
+    protected void Wait()
+    {
+        playerState.SetState(battleState.State.WAIT); // Wait
+        BattleController.EnemyChoose();
+    }
+
     public abstract void Process();
 }

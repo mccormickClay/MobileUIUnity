@@ -30,22 +30,47 @@ public class EnemyManager {
     void privCreate()
     {
         Debug.Log("Create enemy object/factory for storage");
-        enemyPosition_2 = new Vector3(-294f, 1.24f, -0.3f);
+        enemyPosition_Middle = new Vector3(-294f, 1.24f, -0.3f);
+        enemyPosition_Left = new Vector3(-295.5f, 1.5f, 2.5f);
+        enemyPosition_Right = new Vector3(-292.6f, 1.5f, 2.5f);
+
+        BatSpawner.SpawnBats(3);
     }
 
-    public static Vector3 GetMiddleSpawn()
+    public static Vector3 GetNextSpawnPoint()
     {
-        return(Instance().privGetMiddleSpawn());
+        return(Instance().privGetNextSpawnPoint());
     }
 
-    Vector3 privGetMiddleSpawn()
+    Vector3 privGetNextSpawnPoint()
     {
-        return (enemyPosition_2);
+        Vector3 temp = Vector3.zero;
+
+        switch (spawnPoint)
+        {
+            case 0:
+                temp = enemyPosition_Middle;
+                break;
+            case 1:
+                temp = enemyPosition_Left;
+                break;
+            case 2:
+                temp = enemyPosition_Right;
+                break;
+            default:
+                temp = Vector3.zero;
+                Debug.Log("To Many Enemies are already spawned!");
+                break;
+        }
+
+        spawnPoint++;
+        return (temp);
+            
     }
 
-    private Vector3 enemyPosition_1;
-    private Vector3 enemyPosition_2;
-    private Vector3 enemyPosition_3;
-    public enum ENEMYSPAWNPOINT { LEFT, MIDDLE, RIGHT};
+    private Vector3 enemyPosition_Middle;
+    private Vector3 enemyPosition_Left;
+    private Vector3 enemyPosition_Right;
+    static int spawnPoint = 0;
 
 }

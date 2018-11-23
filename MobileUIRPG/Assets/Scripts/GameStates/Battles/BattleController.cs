@@ -7,15 +7,17 @@ public class BattleController {
     private static BattleController instance = null;
     private bool battleMode = true;
     public Queue<battleState> turnQueue;
+    public Queue<battleState> waitQueue;
     public int amountOfPawns = 1;
     public int turnsLeft;
-    float timeBetweenTurns = 2.0f;
+    float timeBetweenTurns = 1.0f;
 
     TurnTimer timer;
 
     private BattleController()
     {
         turnQueue = new Queue<battleState>();
+        waitQueue = new Queue<battleState>();
         GameObject timerObject = GameObject.Instantiate(Resources.Load("CalledPrefabs/TurnTimerObject") as GameObject);
 
         timer = timerObject.GetComponent<TurnTimer>();
@@ -54,6 +56,35 @@ public class BattleController {
             turnsLeft = amountOfPawns;
             BattleSequence();
         }
+        else
+        {
+            EnemyChoose();
+        }
+    }
+
+    public static void AddToWaitQueue(battleState _go)
+    {
+        Instance().privAddToWaitQueue(_go);
+    }
+
+    void privAddToWaitQueue(battleState _go)
+    {
+        waitQueue.Enqueue(_go);
+    }
+
+    public static void EnemyChoose()
+    {
+        Instance().privEnemyChoose();
+    }
+
+    void privEnemyChoose()
+    {
+        Debug.Log("waitQueue size: " + waitQueue.Count);
+        if (waitQueue.Count != 0)
+        {
+            battleState temp = waitQueue.Dequeue();
+            temp.NextState();
+        }
     }
 
     public static void StartTurn()
@@ -66,7 +97,10 @@ public class BattleController {
         Debug.Log(turnQueue.Count);
         battleState temp = turnQueue.Dequeue();
 
-        temp.PerformAction();
+        temp.Action();
+
+        temp.SetState(battleState.State.WAIT);
+        waitQueue.Enqueue(temp);
 
     }
 
@@ -74,9 +108,7 @@ public class BattleController {
     {
         if (Instance().turnQueue.Count > 0)
         {
-
             timer.StartBattleCountDown(timeBetweenTurns);
-
         }
 
     }

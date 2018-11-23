@@ -9,7 +9,7 @@ public class messageAttack : messageBase {
     MethodBase method;
     GameObject enemy;
     messageSelectEnemy selector;
-    playerState playerState;
+
 
     // Use this for initialization
     void Awake () {
@@ -23,7 +23,7 @@ public class messageAttack : messageBase {
         selector.SetMsgAttack(ref message);
 	}
 	
-    public override void Choose()
+    protected override void Choose()
     {
         if (enemy != null)
         {
@@ -33,9 +33,9 @@ public class messageAttack : messageBase {
             BattleController.AddTurn(playerState);
 
             playerState.SetMessage(this);
-            enemy.GetComponent<Enemy>().NextState(); // Set Enemy to Choose
-
-            playerState.NextState(); // Wait
+            
+            Wait();
+            
         }
     }
 

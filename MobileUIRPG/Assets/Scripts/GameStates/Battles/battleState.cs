@@ -11,9 +11,10 @@ public abstract class battleState : MonoBehaviour {
     protected bool inFirst = false;
 
     protected abstract void DoState();
-    protected void SetState(State _state)
+    public void SetState(State _state)
     {
         state = _state;
+        DoState();
     }
 
     public void NextState()
@@ -32,18 +33,7 @@ public abstract class battleState : MonoBehaviour {
         DoState();
     }
 
-    public void PerformAction()
-    {
-        Action();
-    }
 
-    private IEnumerator Waiting(float waitTime)
-    {
-        inFirst = true;
-        print("in FinishFirst");
-        yield return new WaitForSeconds(waitTime);
-        print("leave FinishFirst");
-        inFirst = false;
-    }
+
     public abstract void Action();
 }

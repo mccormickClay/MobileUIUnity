@@ -15,8 +15,9 @@ public class GlobalManager
         DebugMobileManager.Create();
 
         PlayerManager.Create();
-        BattleController.Create();
+
         EnemyManager.Create();
+        BattleController.Create();
 
         savedData = new playerStats();
     }
