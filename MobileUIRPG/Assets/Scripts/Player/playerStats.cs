@@ -7,5 +7,6 @@ public class playerStats {
 
     public float currentHP;
     public float maxHP;
+    public ClassBase classCmd;
 
 }

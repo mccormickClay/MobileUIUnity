@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class playerState : battleState {
 
     playerStats localPlayerData;
-    public Image healthBar;
+    //public Image healthBar;
     messageBase cmdBase;
 
     GameObject buttonAtt;
@@ -25,26 +25,21 @@ public class playerState : battleState {
             localPlayerData.currentHP = localPlayerData.maxHP;
         }
 
+        localPlayerData.classCmd = new WarriorClass();
         CreatePlayerCanvas();
 	}
 	
+
     void CreatePlayerCanvas()
     {
-        GameObject playerUI = Instantiate(Resources.Load("CalledPrefabs/PlayerCanvas") as GameObject);
-        playerUI.name = "PlayerCanvas";
-        healthBar = playerUI.transform.GetChild(4).gameObject.GetComponent<Image>();
-        healthBar.fillAmount = localPlayerData.currentHP / localPlayerData.maxHP;
-        buttonAtt = playerUI.transform.GetChild(0).gameObject;
-        buttonDef = playerUI.transform.GetChild(1).gameObject;
-        imageWait = playerUI.transform.GetChild(2).gameObject;
-
-        EnableButtons(true);
+        localPlayerData.classCmd.CreateCanvas(localPlayerData.currentHP, localPlayerData.maxHP);
+        
     }
 
     void EnableButtons(bool enabled)
     {
         buttonAtt.SetActive(enabled);
-        buttonDef.SetActive(enabled);
+        //buttonDef.SetActive(enabled);
 
         imageWait.SetActive(!enabled);
     }
@@ -60,11 +55,11 @@ public class playerState : battleState {
         {
             case battleState.State.CHOOSE:
                 Debug.Log("Set to Choose");
-                EnableButtons(true);
+                localPlayerData.classCmd.EnableButtons(true);
                 break;
             case battleState.State.WAIT:
                 Debug.Log("Set to Wait");
-                EnableButtons(false);
+                localPlayerData.classCmd.EnableButtons(false);
                 break;
         }
     }
@@ -83,13 +78,10 @@ public class playerState : battleState {
     public void Damage(float _dmg)
     {
         localPlayerData.currentHP -= _dmg;
-        UpdateHealth();
+        localPlayerData.classCmd.UpdateHealth(localPlayerData.currentHP);
     }
 
-    void UpdateHealth()
-    {
-        healthBar.fillAmount = localPlayerData.currentHP / localPlayerData.maxHP;
-    }
+
 
     void SavePlayer()
     {
